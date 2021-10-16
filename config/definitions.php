@@ -10,6 +10,7 @@ return [
             'Monday',
             'Trello',
         ],
+        'type' => 'url'
     ],
     'time'   => [
         'name'    => 'Time Tracking',
@@ -20,6 +21,7 @@ return [
             'Timely',
             'Toggl',
         ],
+        'type' => 'url'
     ],
     'git'    => [
         'name'    => 'Repo Host',
@@ -29,6 +31,7 @@ return [
             'BitBucket',
             'AWS CodeCommit',
         ],
+        'type' => 'url'
     ],
     'design' => [
         'name'    => 'Design',
@@ -38,5 +41,6 @@ return [
             'Sketch',
             'Zeplin',
         ],
+        'type' => 'url'
     ],
 ];
