@@ -22,6 +22,11 @@ class UrlResource extends ProjectResourceAbstract
         self::LINUX => 'xdg-open',
     ];
 
+    public static function getType(): string
+    {
+        return 'url';
+    }
+
     public function callResource(InputInterface $input, OutputInterface $output): int
     {
         if (empty($this->getValue())) {

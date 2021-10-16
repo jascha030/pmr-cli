@@ -2,23 +2,27 @@
 
 namespace Jascha030\PM\Project\Category;
 
-use Jascha030\PM\Project\ProjectResourceInterface;
-
-class ResourceCategory extends ResourceCategoryAbstract
+class ResourceCategory implements ResourceCategoryInterface
 {
-    private ProjectResourceInterface $resource;
+    private string $key;
 
     private string $name;
 
-    private string $key;
-
     private array $options;
 
-    public function __construct(string $name, string $key, array $options)
+    private string $type;
+
+    public function __construct(string $key, string $name, array $options, string $type)
     {
-        $this->name    = $name;
         $this->key     = $key;
+        $this->name    = $name;
         $this->options = $options;
+        $this->type    = $type;
+    }
+
+    public function getKey(): string
+    {
+        return $this->key;
     }
 
     public function getName(): string
@@ -31,8 +35,8 @@ class ResourceCategory extends ResourceCategoryAbstract
         return $this->options;
     }
 
-    public function getKey(): string
+    public function getType(): string
     {
-        return $this->key;
+        return $this->type;
     }
 }
