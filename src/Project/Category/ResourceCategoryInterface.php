@@ -1,10 +1,14 @@
 <?php
 
-namespace Jascha030\PM\Project;
+namespace Jascha030\PM\Project\Category;
+
+use Jascha030\PM\Project\ProjectResourceInterface;
 
 interface ResourceCategoryInterface
 {
     public function getName(): string;
+
+    public function getKey(): string;
 
     public function getOptions(): array;
 

@@ -4,31 +4,35 @@ namespace Jascha030\PM\Project\Category;
 
 use Jascha030\PM\Project\ProjectResourceInterface;
 
-class TaskTrackingResourceCategory extends ResourceCategoryAbstract
+class ResourceCategory extends ResourceCategoryAbstract
 {
-    public const PROVIDERS = [
-        'Asana',
-        'ClickUp',
-        'Jira',
-        'Monday',
-        'Trello',
-        'Other'
-    ];
-
     private ProjectResourceInterface $resource;
+
+    private string $name;
+
+    private string $key;
+
+    private array $options;
+
+    public function __construct(string $name, string $key, array $options)
+    {
+        $this->name    = $name;
+        $this->key     = $key;
+        $this->options = $options;
+    }
 
     public function getName(): string
     {
-        return 'Task Manager';
+        return $this->name;
     }
 
     public function getOptions(): array
     {
-        return self::PROVIDERS;
+        return $this->options;
     }
 
     public function getKey(): string
     {
-        return 'tasks';
+        return $this->key;
     }
 }
