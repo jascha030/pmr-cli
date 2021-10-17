@@ -12,12 +12,12 @@ class ResourceCategory implements ResourceCategoryInterface
 
     private string $type;
 
-    public function __construct(string $key, string $name, array $options, string $type)
+    public function __construct(string $key, string $name, string $type, array $options = [])
     {
         $this->key     = $key;
         $this->name    = $name;
-        $this->options = $options;
         $this->type    = $type;
+        $this->options = $options;
     }
 
     public function getKey(): string
