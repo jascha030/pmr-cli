@@ -1,1 +1,11 @@
-<?php
+[pm.task]
+    category = "Task Manager"
+    name = "ClickUp"
+    value = "https://app.clickup.com/1234/v/1234"
+    type = "url"
+
+[pm.time]
+    category = "Time Tracking"
+    name = "Everhour"
+    value = "https://app.everhour.com/#/time"
+    type = "url"
