@@ -44,7 +44,7 @@ pmr open
 
 This will give you a list of choices like demonstrated below:
 
-```shell
+```console
   Which resource are you looking for?
   [0] tasks
   [1] time
