@@ -38,7 +38,7 @@ categories:
 
 The open command provides quick access to your provided resources.
 
-```shell
+```console
 pmr open
 ```
 
