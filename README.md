@@ -60,6 +60,20 @@ This will give you a list of choices like demonstrated below:
 Currently, only supports Darwin (macOS) and Linux OS's. When `uname -s` is `Darwin` the CLI uses the `open` command,
 for `Linux` the `xdg-open` command is executed.
 
+## Reasoning
+
+You might wonder...
+
+**But Jascha, why php and not, for example, Rust?**
+
+> My ADD mind tends to forget what it's looking for and takes long to switch between apps and sites, so this was built out of necessity.
+> Because of this, I wanted this tool to be built in _hours_ instead of _days or even weeks_.
+
+**But Jascha, why toml?**
+
+> Never used really used it, but it looked like a better version of `yaml`, I like the human readability of yaml and because toml can be parsed in many languages easily, 
+> it opens up the possibility to rebuild this app in e.g. Rust, if I ever find myself bored or wanting to practice other languages.
+
 ## TODO
 
 * Show service name in `pmr open` choice list, instead of category key (e.g. ClickUp, Everhour etc.).
