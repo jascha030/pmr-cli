@@ -10,6 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\SplFileInfo;
 
 class InitCommand extends Command
 {
@@ -21,16 +24,20 @@ class InitCommand extends Command
 
     private ResourceService $resourceService;
 
+    private Filesystem $filesystem;
+
     public function __construct(ResourceService $resourceService, string $name = null)
     {
         $this->resourceService = $resourceService;
+
+        $this->filesystem = new Filesystem();
 
         parent::__construct($name);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->write(self::INTRO . PHP_EOL);
+        $output->write(self::INTRO . PHP_EOL . PHP_EOL);
 
         $this->resourceService->fetchDefinitions();
         $definitions     = $this->resourceService->getDefinitions();
@@ -39,9 +46,10 @@ class InitCommand extends Command
         $answers = [];
 
         foreach ($definitions as $definition) {
-            $confirmation = "Do you want to add a: {$definition->getName()}? ";
+            $lower = strtolower($definition->getName());
+            $confirmation = "Do you want to add a <info>{$lower}</info> resource? (return to skip)\n<comment>[yes|y|ok]</comment>: ";
 
-            if (!$questionService->ask($input, $output, new ConfirmationQuestion($confirmation, false))) {
+            if (!$questionService->ask($input, $output, new ConfirmationQuestion($confirmation, false, '/^(yes|ok|y)/i'))) {
                 continue;
             }
 
@@ -50,12 +58,17 @@ class InitCommand extends Command
 
             $option = $questionService->ask($input, $output, new ChoiceQuestion(
                 "Which {$lowercaseCategory} do you use? ",
-                $definition->getOptions()
+                $definition->getOptions(),
+                'Other'
             ));
 
             $value = $questionService->ask($input, $output,
                 new Question("Enter the {$definition->getType()}: ")
             );
+
+            if (!$value) {
+                continue;
+            }
 
             $answers[$definition->getKey()] = new $class($definition, $option, $value);
         }
@@ -66,7 +79,20 @@ class InitCommand extends Command
             $tomlString .= TomlService::parseResource($resource) . PHP_EOL;
         }
 
-       return 0;
+        $file = getcwd() . '/.pm.toml';
+        $this->filesystem->touch($file);
+
+        try {
+            $this->filesystem->dumpFile($file, $tomlString);
+        } catch(IOException $e) {
+            $output->writeln($e->getMessage());
+
+            return Command::FAILURE;
+        }
+
+        $output->writeln("Resource file was created successfully!");
+
+        return Command::SUCCESS;
     }
 
     final protected function configure(): void
