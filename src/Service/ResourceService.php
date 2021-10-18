@@ -63,6 +63,9 @@ class ResourceService
         }
     }
 
+    /**
+     * @return \Jascha030\PM\Project\ProjectResourceInterface[]
+     */
     public function parseConfig(string $path): array
     {
         $contents = TomlService::parseToString($path);
