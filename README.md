@@ -9,7 +9,7 @@ Small utility cli tool, to store project management related info.
 Install globally with composer:
 
 ```shell
-composer require --global jascha030/pmr
+composer require --global jascha030/pmr-cli
 ```
 
 ## Usage

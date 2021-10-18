@@ -1,5 +1,5 @@
 {
-  "name": "jascha030/pmr",
+  "name": "jascha030/pmr-cli",
   "description": "Small CLI Utility for PM purposes.",
   "require": {
     "symfony/console": "^5.3",
