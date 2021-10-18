@@ -24,7 +24,7 @@ return [
         'type' => 'url'
     ],
     'git'    => [
-        'name'    => 'Repo Host',
+        'name'    => 'Git provider|repo',
         'options' => [
             'GitHub',
             'GitLab',
