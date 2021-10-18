@@ -1,8 +1,31 @@
 #!/usr/bin/env php
 <?php
 
+use Jascha030\PM\Console\Command\InitCommand;
+use Jascha030\PM\Console\Command\OpenCommand;
+use Jascha030\PM\Project\UrlResource;
+use Jascha030\PM\Service\ResourceService;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$app = new Application();
+$app = new Application('PM Resource CLI', '1.0.0');
+
+$types = [
+    UrlResource::getType() => UrlResource::class
+];
+
+$service = new ResourceService($types);
+
+$app->add(new InitCommand($service, 'init'));
+$app->add(new OpenCommand($service));
+
+try {
+    $app->run();
+} catch (Exception $e) {
+    (new ConsoleOutput())->writeln($e->getMessage());
+
+    return Command::FAILURE;
+}
