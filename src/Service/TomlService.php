@@ -3,9 +3,34 @@
 namespace Jascha030\PM\Service;
 
 use Jascha030\PM\Project\ProjectResourceInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class TomlService
 {
+    public static function addToGitignore(): void
+    {
+        $path = getcwd() . '/.gitignore';
+        $fs = new Filesystem();
+
+        // Todo: Check if dir even has .git/ beforehand
+        if (! file_exists($path)) {
+            return;
+        }
+
+        $file = new \SplFileInfo($path);
+        $contents = file_get_contents($file->getRealPath());
+
+        // Todo: give user option to create new .gitignore
+        if (! $contents) {
+            return;
+        }
+
+        // Todo: Check if toml already ignored
+        $contents .= PHP_EOL . '.pm.toml' . PHP_EOL . PHP_EOL;
+        $fs->dumpFile($file->getRealPath(), $contents);
+    }
+
+
     public static function parseToString(string $path): string
     {
         if (! file_exists($path)) {
