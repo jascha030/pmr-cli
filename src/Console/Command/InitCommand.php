@@ -12,7 +12,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\SplFileInfo;
+use function Sodium\add;
 
 class InitCommand extends Command
 {
@@ -91,6 +91,26 @@ class InitCommand extends Command
         }
 
         $output->writeln("Resource file was created successfully!");
+
+        $gitignore = getcwd() . '/.gitignore';
+
+        if (! file_exists($gitignore)) {
+            return Command::SUCCESS;
+        }
+
+        $addToIgnore = $questionService->ask(
+            $input,
+            $output,
+            new ConfirmationQuestion(
+                'Do you want to add <info>.pm.toml</info> to <info>.gitignore</info>? ' . PHP_EOL . '<comment>[yes|y|ok]</comment>: ',
+                true,
+                '/^(yes|ok|y)/i'
+            )
+        );
+
+        if ($addToIgnore) {
+            TomlService::addToGitignore();
+        }
 
         return Command::SUCCESS;
     }
