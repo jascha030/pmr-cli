@@ -2,6 +2,7 @@
   "name": "jascha030/pmr-cli",
   "description": "Small CLI Utility for PM purposes.",
   "require": {
+    "php": "^7.4|^8.0",
     "symfony/console": "^5.3",
     "symfony/process": "^5.3"
   },
